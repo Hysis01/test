@@ -3,11 +3,11 @@ import datetime
 
 def choose_plural(n, k):
     if n % 10 == 1 and n % 100 != 11:
-        return (f'{n} {k[0]}')
+        return f'{n} {k[0]}'
     elif n % 10 in [2, 3, 4] and n % 100 not in [12, 13, 14]:
-        return (f'{n} {k[1]}')
+        return f'{n} {k[1]}'
     else:
-        return (f'{n} {k[2]}')
+        return f'{n} {k[2]}'
 
 
 try:
@@ -16,7 +16,21 @@ try:
     date_now = datetime.datetime.now().replace(second=0, microsecond=0)
     if date_x >= date_now:
         delta = date_x - date_now
-
+        hours = delta.seconds // 3600
+        minutes = (delta.seconds - hours * 3600) // 60
+        if delta.days == 0:
+            if hours == 0:
+                print('До часа "Икс" ' + choose_plural(minutes, ["минута", "минуты", "минут"]))
+            else:
+                print('До часа "Икс" ' + choose_plural(hours, ["час", "часа", "часов"]) + " и " +
+                      choose_plural(minutes, ["минута", "минуты", "минут"]))
+        elif minutes == 0:
+            print('До часа "Икс" ' + choose_plural(delta.days, ["день", "дня", "дней"]) + " " +
+                  choose_plural(hours, ["час", "часа", "часов"]))
+        else:
+            print('До часа "Икс" ' + choose_plural(delta.days, ["день", "дня", "дней"]) + " " +
+                  choose_plural(hours, ["час", "часа", "часов"]) + " " +
+                  choose_plural(minutes, ["минута", "минуты", "минут"]))
     else:
         print('Ошибка')
 except:
