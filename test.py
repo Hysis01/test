@@ -18,19 +18,20 @@ try:
         delta = date_x - date_now
         hours = delta.seconds // 3600
         minutes = (delta.seconds - hours * 3600) // 60
-        if delta.days == 0:
-            if hours == 0:
+        days = delta.days
+        match (True):
+            case True if days == 0 and hours == 0:
                 print('До часа "Икс" ' + choose_plural(minutes, ["минута", "минуты", "минут"]))
-            else:
-                print('До часа "Икс" ' + choose_plural(hours, ["час", "часа", "часов"]) + " и " +
+            case True if days == 0 and hours != 0:
+                print('До часа "Икс" ' + choose_plural(hours,["час", "часа", "часов"]) + " и " +
                       choose_plural(minutes, ["минута", "минуты", "минут"]))
-        elif minutes == 0:
-            print('До часа "Икс" ' + choose_plural(delta.days, ["день", "дня", "дней"]) + " " +
-                  choose_plural(hours, ["час", "часа", "часов"]))
-        else:
-            print('До часа "Икс" ' + choose_plural(delta.days, ["день", "дня", "дней"]) + " " +
-                  choose_plural(hours, ["час", "часа", "часов"]) + " " +
-                  choose_plural(minutes, ["минута", "минуты", "минут"]))
+            case True if days != 0 and minutes == 0:
+                print('До часа "Икс" ' + choose_plural(days, ["день", "дня", "дней"]) + " и " +
+                      choose_plural(hours, ["час", "часа", "часов"]))
+            case _:
+                print('До часа "Икс" ' + choose_plural(days, ["день", "дня", "дней"]) + " " +
+                      choose_plural(hours, ["час", "часа", "часов"]) + " " +
+                      choose_plural(minutes, ["минута", "минуты", "минут"]))
     else:
         print('Ошибка')
 except:
